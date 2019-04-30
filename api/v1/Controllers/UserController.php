@@ -36,6 +36,5 @@
             $result = $this->userDAO->signupUser($user);
 
             ResponseHandler::sendResponseWithMessage(isset($result['user']) ? $result['user'] : "",  $result);
-
         }
     }

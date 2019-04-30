@@ -30,10 +30,26 @@ $router->get('/', function () {
 	ResponseHandler::sendResponseWith200("", null, "Welcome to the affable bean", "");
 });
 
-// Route: /auth
+// Route: /user
 $router->mount('/user', function () use ($router) {
 	$router->post('/signin', 'UserController@signin');
 	$router->post('/signup', 'UserController@signup');
+});
+
+// Route: /categories
+$router->mount('/categories', function () use ($router) {
+	$router->get('/', 'CategoryController@getCategories');
+	$router->post('/', 'CategoryController@createCategory');
+	$router->put('/', 'CategoryController@updateCategory');
+	$router->delete('/', 'CategoryController@deleteCategory');
+});
+
+// Route: /products
+$router->mount('/products', function () use ($router) {
+	$router->get('/', 'ProductController@getProducts');
+	$router->post('/', 'ProductController@createProduct');
+	$router->put('/', 'ProductController@updateController');
+	$router->delete('/', 'ProductController@deleteController');
 });
 
 // Route: /logging
