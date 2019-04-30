@@ -52,6 +52,23 @@ $router->mount('/products', function () use ($router) {
 	$router->delete('/', 'ProductController@deleteProduct');
 });
 
+// Route: /orders
+$router->mount('/orders', function () use ($router) {
+	$router->get('/', 'OrderController@getOrders');
+	$router->get('/', 'OrderController@getOrdersByUserId');
+	$router->post('/', 'OrderController@createOrder');
+	$router->delete('/', 'OrderController@deleteOrder');
+});
+
+// Route: /cart
+$router->mount('/cart', function () use ($router) {
+	$router->get('/', 'CartController@getCart');
+	$router->post('/', 'CartController@addToCart');
+	$router->delete('/', 'CartController@deleteItem');
+});
+
+
+
 // Route: /logging
 $router->mount('/logging', function () use ($router) {
 	$router->post('/', 'LoggingController@getLogs');
