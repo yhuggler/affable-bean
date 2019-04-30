@@ -48,8 +48,8 @@ $router->mount('/categories', function () use ($router) {
 $router->mount('/products', function () use ($router) {
 	$router->get('/', 'ProductController@getProducts');
 	$router->post('/', 'ProductController@createProduct');
-	$router->put('/', 'ProductController@updateController');
-	$router->delete('/', 'ProductController@deleteController');
+	$router->put('/', 'ProductController@updateProduct');
+	$router->delete('/', 'ProductController@deleteProduct');
 });
 
 // Route: /logging
