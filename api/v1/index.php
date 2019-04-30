@@ -32,7 +32,8 @@ $router->get('/', function () {
 
 // Route: /auth
 $router->mount('/user', function () use ($router) {
-	$router->post('/login', 'UserController@login');
+	$router->post('/signin', 'UserController@signin');
+	$router->post('/signup', 'UserController@signup');
 });
 
 // Route: /logging

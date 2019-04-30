@@ -25,9 +25,9 @@
 				return "Passwords don't match..";				
 		}
 
-		public static function checkSignInInput($username, $password) {
-			if ($username == "" || $username == null)
-				return "Your username can't be empty.";
+		public static function checkSignInInput($email, $password) {
+			if ($email == "" || $email == null)
+				return "Your email can't be empty.";
 
 			if ($password == "" || $password == null)
 				return "Your password can't be empty.";				
