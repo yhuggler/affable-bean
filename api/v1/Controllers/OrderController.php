@@ -8,12 +8,14 @@
             $this->middleware = new Middleware();
         }
 
-        // If admin => show all, if regular user => show only the ones from the user
         public function getOrders() {
             $request = $this->middleware->checkAuth();
-            $this->middleware->checkPrivilegies($request['user'], 2);
-
-            $response = $this->orderDAO->getOrders();
+                
+            if ($request['user']->role == 2)
+                $response = $this->orderDAO->getOrders(-1);
+            else
+                $response = $this->orderDAO->getOrders($request['user']->id);
+            
             ResponseHandler::sendResponseWithData("", $response);
         }
 
@@ -24,10 +26,5 @@
             $response = $this->orderDAO->createOrder($userId);
             ResponseHandler::sendResponseWithMessage("", $response);
         }
-
-        public function deleteOrder() {
-
-        }
-
     }
 ?>  

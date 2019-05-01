@@ -8,13 +8,22 @@
             $this->conn = $dbConn->conn;
         }
 
-        public function getOrders() {
+        public function getOrders($userId) {
             try {
                 $response = array();
                 $response['data']['orders'] = array();
 
-                $sql = "SELECT * FROM customer_orders";
-                $stmt = $this->conn->prepare($sql);
+                $stmt = null;
+
+                if ($userId === -1) {
+                    $sql = "SELECT * FROM customer_orders";
+                    $stmt = $this->conn->prepare($sql);
+                } else {
+                    $sql = "SELECT * FROM customer_orders WHERE user_id = :user_id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+                }
+
                 $stmt->execute();
 
                 $ordersResults = $stmt->fetchAll();
@@ -31,10 +40,6 @@
                 $response['error_message'] = "Internal Server Error";
                 return $response;
             }
-        }
-
-        public function getOrdersByUserId($userId) {
-
         }
 
         public function createOrder($userId) {
@@ -112,10 +117,6 @@
                 $response['error_message'] = "Internal Server Error";
                 return $response;
             }
-        }
-
-        public function deleteOrder($orderId) {
-
         }
     }
 
