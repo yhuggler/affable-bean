@@ -2,13 +2,13 @@
     class ShoppingCartItem {
         public $id;
         public $userId;
-        public $productId;
+        public $product;
         public $quantity;
         
-        public function __construct($id, $userId, $productId, $quantity) {
+        public function __construct($id, $userId, $product, $quantity) {
             $this->id = $id;
             $this->userId = $userId; 
-            $this->productId = $productId; 
+            $this->product= $product; 
             $this->quantity = $quantity;
         }
     }

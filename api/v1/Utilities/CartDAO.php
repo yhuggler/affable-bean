@@ -11,7 +11,7 @@
             try {
                 $response = array();
                 
-                $sql = "SELECT cart.id, product_id, quantity, price FROM cart INNER JOIN products ON cart.product_id = products.id WHERE user_id = :user_id";
+                $sql = "SELECT cart.id, product_id, quantity, price, description, name, last_update, category_id FROM cart INNER JOIN products ON cart.product_id = products.id WHERE user_id = :user_id";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
                 $stmt->execute();
@@ -26,10 +26,15 @@
                     $productId = $row['product_id'];
                     $quantity = $row['quantity'];
                     $price = $row['price'];
+                    $description = $row['description'];
+                    $lastUpdate = $row['last_update'];
+                    $name = $row['name'];
+                    $categoryId = $row['category_id'];
 
-                    $totalPrice += $price;
+                    $totalPrice += $price * $quantity;
+                    $product = new Product($productId, $name, $price, $description, $lastUpdate, $categoryId);
 
-                    $shoppingCartItem = new ShoppingCartItem($id, $userId, $productId, $quantity);
+                    $shoppingCartItem = new ShoppingCartItem($id, $userId, $product, $quantity);
                     array_push($shoppingCartItems, $shoppingCartItem); 
                 }
                 
@@ -54,8 +59,17 @@
                     $response['error'] = "bad_request";
                     return $response;
                 }
-                
-                // First check, if item is already in cart. If yes, simply increment quantity.
+
+                if ($this->isAlreadyInCart($userId, $productId)) {
+                    $cartItem = $this->getCartItemByProductId($userId, $productId);  
+                    $quantity = $cartItem['quantity'] + 1;
+                    $itemId = $cartItem['id'];
+
+                    $this->updateQuantity($itemId, $quantity); 
+                    
+                    $response['message'] = "Added to cart";
+                    return $response;
+                }        
 
                 $sql = "INSERT INTO cart(user_id, product_id) VALUES(:user_id, :product_id)";
                 $stmt = $this->conn->prepare($sql);
@@ -73,25 +87,66 @@
             }
         }
 
-        public function updateQuantity($userId, $productId, $quantity) {
+        private function isAlreadyInCart($userId, $productId) {
+            try {
+                $sql = "SELECT * FROM cart WHERE product_id = :product_id AND user_id = :user_id";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':product_id', $productId, PDO::PARAM_INT);
+                $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $cartResults = $stmt->fetchAll();
+                
+                return !empty($cartResults);
+            } catch (Exception $e) {
+                LoggerHelper::addLogToDB(LoggingSeverity::Warning, $e->getMessage());
+                $response['error'] = $e->getMessage();
+                $response['error_message'] = "Internal Server Error";
+                return $response;
+            }
+        }
+
+        private function getCartItemByProductId($userId, $productId) {
+            try {
+                $sql = "SELECT * FROM cart WHERE product_id = :product_id AND user_id = :user_id";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':product_id', $productId, PDO::PARAM_INT);
+                $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $cartResults = $stmt->fetchAll();
+
+                return $cartResults[0];
+            } catch (Exception $e) {
+                LoggerHelper::addLogToDB(LoggingSeverity::Warning, $e->getMessage());
+                $response['error'] = $e->getMessage();
+                $response['error_message'] = "Internal Server Error";
+                return $response;
+            }
+        }
+
+        public function updateQuantity($itemId, $quantity) {
             try {
                 $response = array();
 
-                if ($productId == 0 || $productId == null) {
-                    $response['error_message'] = "Please provide a valid product id.";
+                if ($itemId == 0 || $itemId == null) {
+                    $response['error_message'] = "Please provide a valid item id.";
                     $response['error'] = "bad_request";
                     return $response;
                 }
 
-                $sql = "INSERT INTO cart(user_id, product_id) VALUES(:user_id, :product_id)";
+                if ($quantity <= 0) {
+                    return $this->deleteItem($itemId);
+                }
+
+                $sql = "UPDATE cart SET quantity = :quantity WHERE id = :item_id";
                 $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-                $stmt->bindParam(':product_id', $productId, PDO::PARAM_INT);
+                $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+                $stmt->bindParam(':item_id', $itemId, PDO::PARAM_INT);
                 $stmt->execute();
 
-                $response['message'] = "Added to cart";
+                $response['message'] = "Updadet quantity";
                 return $response;
-                
             } catch (Exception $e) {
                 LoggerHelper::addLogToDB(LoggingSeverity::Warning, $e->getMessage());
                 $response['error'] = $e->getMessage();
@@ -100,9 +155,23 @@
             }
         } 
 
-        public function deleteItem($userId, $itemId) {
+        public function deleteItem($itemId) {
             try {
+                $response = array();
+                
+                if ($itemId == 0 || $itemId == null) {
+                    $response['error_message'] = "Please provide a valid item id.";
+                    $response['error'] = "bad_request";
+                    return $response;
+                }
 
+                $sql = "DELETE FROM cart WHERE id = :item_id";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':item_id', $itemId, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response['message'] = "Removed item from the cart";
+                return $response;
             } catch (Exception $e) {
                 LoggerHelper::addLogToDB(LoggingSeverity::Warning, $e->getMessage());
                 $response['error'] = $e->getMessage();

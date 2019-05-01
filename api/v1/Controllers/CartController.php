@@ -27,18 +27,19 @@
 
         public function updateQuantity() {
             $request = $this->middleware->checkAuth();    
-            $userId = $request['user']->id;
+            $itemId = $request['inputs']['itemId'];
+            $quantity = $request['inputs']['quantity'];
             
-            $result = $this->cartDAO->getCart($userId);  
+            $result = $this->cartDAO->updateQuantity($itemId, $quantity);  
             ResponseHandler::SendresponseWithData("", $result);
         } 
 
         public function deleteItem() {
             $request = $this->middleware->checkAuth();    
-            $userId = $request['user']->id;
-            
-            $result = $this->cartDAO->getCart($userId);  
-            ResponseHandler::SendresponseWithData("", $result);
+            $itemId = $request['inputs']['itemId'];
+
+            $result = $this->cartDAO->deleteItem($itemId);  
+            ResponseHandler::SendresponseWithMessage("", $result);
         }
 
         public function clearCart() {
