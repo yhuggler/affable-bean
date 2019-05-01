@@ -179,5 +179,30 @@
                 return $response;
             }
         }
+
+        public function clearCart($userId) {
+            try {
+                $response = array();
+                
+                if ($userId == 0 || $userId == null) {
+                    $response['error_message'] = "Please provide a valid user id.";
+                    $response['error'] = "bad_request";
+                    return $response;
+                }
+
+                $sql = "DELETE FROM cart WHERE user_id = :user_id";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response['message'] = "Cleared the cart";
+                return $response;
+            } catch (Exception $e) {
+                LoggerHelper::addLogToDB(LoggingSeverity::Warning, $e->getMessage());
+                $response['error'] = $e->getMessage();
+                $response['error_message'] = "Internal Server Error";
+                return $response;
+            }
+        }
     }
 ?>

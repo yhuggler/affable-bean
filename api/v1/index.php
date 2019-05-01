@@ -52,7 +52,7 @@ $router->mount('/products', function () use ($router) {
 	$router->delete('/', 'ProductController@deleteProduct');
 });
 
-// Route: /orders
+// Route: /order
 $router->mount('/orders', function () use ($router) {
 	$router->get('/', 'OrderController@getOrders');
 	$router->get('/', 'OrderController@getOrdersByUserId');
