@@ -7,11 +7,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialImports } from './material-imports';
 import { CategoryOverviewComponent } from './components/category-overview/category-overview.component';
+import { CategoriesComponent } from './routes/categories/categories.component';
+import { HomeComponent } from './routes/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CategoryOverviewComponent
+    CategoryOverviewComponent,
+    CategoriesComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
