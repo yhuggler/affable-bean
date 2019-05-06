@@ -9,13 +9,17 @@ import { MaterialImports } from './material-imports';
 import { CategoryOverviewComponent } from './components/category-overview/category-overview.component';
 import { CategoriesComponent } from './routes/categories/categories.component';
 import { HomeComponent } from './routes/home/home.component';
+import { SigninComponent } from './dialogs/signin/signin.component';
+import { SignupComponent } from './dialogs/signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoryOverviewComponent,
     CategoriesComponent,
-    HomeComponent
+    HomeComponent,
+    SigninComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +28,10 @@ import { HomeComponent } from './routes/home/home.component';
       ReactiveFormsModule,
       HttpClientModule,
       MaterialImports
+  ],
+  entryComponents: [
+    SigninComponent,
+    SignupComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

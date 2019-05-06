@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav, MatDialog, MatSnackBar } from '@angular/material';
 import { ProductsService } from '../../services/products.service';
 import { CategoriesService } from '../../services/categories.service';
 import { switchMap } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { SigninComponent } from '../../dialogs/signin/signin.component';
+
 
 @Component({
   selector: 'app-categories',
@@ -23,7 +25,9 @@ export class CategoriesComponent implements OnInit {
     constructor(private productsService: ProductsService,
                 private categoriesService: CategoriesService,
                 private route: ActivatedRoute,
-                private router: Router) { 
+                private router: Router,
+                private matDialog: MatDialog,
+                private matSnackBar: MatSnackBar) { 
     }
 
     public ngOnInit() {
@@ -50,5 +54,17 @@ export class CategoriesComponent implements OnInit {
         this.categoriesService.getCategories().subscribe(response => {
             this.categories = response['data']['categories'];
         });
+    }
+
+    public addToCart(item: Object) {
+        if (localStorage.getItem('jwt') !== null) {
+             
+        } else {
+            this.matSnackBar.open('Please login first, before you add an item to the cart.', 'Dismiss', {
+              duration: 2000,
+            });
+            
+            this.matDialog.open(SigninComponent);
+        }
     }
 }
