@@ -23,4 +23,12 @@ export class ShoppingCartComponent implements OnInit {
         });
     }
 
+    public updateQuantity(item: Object, quantityChange: number) {
+        const newQuantity = Number(item['quantity']) + Number(quantityChange);
+        
+        this.cartService.updateQuantity(item['id'], newQuantity).subscribe(response => {
+            this.fetchShoppingCartItems();
+        });
+    }
+
 }

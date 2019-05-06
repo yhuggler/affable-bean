@@ -3,7 +3,7 @@
         <img src="../assets/img/logo_square.png" class="logo-square">
         <img src="../assets/img/logoText.png" class="logo-text">
         <div class="space-filler"></div>
-        <div *ngIf="isLoggedIn()">
+        <div *ngIf="isLoggedIn() && shoppingCartItems">
             <button mat-raised-button style="margin-right: 15px;" (click)="showShoppingCart()">
                 {{shoppingCartItems.length}} items 
                 

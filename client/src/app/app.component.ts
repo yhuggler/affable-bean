@@ -39,7 +39,9 @@ export class AppComponent {
     }
 
     public showShoppingCart() {
-        this.matDialog.open(ShoppingCartComponent);
+        this.matDialog.open(ShoppingCartComponent, {
+            minWidth: '80%' 
+        });
     }
 
     public handleLogout() {

@@ -22,6 +22,22 @@ export class CartService {
         return this.httpClient.post(AppSettings.API_ENDPOINT + 'cart', body, httpOptions);
     }
 
+    public updateQuantity(itemId: number, quantity: number) {
+        let body = JSON.stringify({
+            itemId: itemId,
+            quantity: quantity
+        });
+        
+        let httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+            })
+        };
+
+        return this.httpClient.put(AppSettings.API_ENDPOINT + 'cart', body, httpOptions);
+    }
+
     public getCart() {
         let httpOptions = {
             headers: new HttpHeaders({

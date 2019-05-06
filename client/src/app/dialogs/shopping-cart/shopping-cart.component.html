@@ -1,8 +1,7 @@
 <h1 mat-dialog-title>Your Shopping Cart</h1>
-<div mat-dialog-content>
+<div mat-dialog-content *ngIf="shoppingCart">
     <p><strong>Your Subtotal</strong> {{ shoppingCart['totalCost'] }}</p> 
-    <div>
-        <table mat-table style="width: 100%" [dataSource]="shoppingCart['shoppingCartItems']" class="mat-elevation-z2">
+        <table mat-table style="width: 100%" [dataSource]="shoppingCart['shoppingCartItems']">
 
           <ng-container matColumnDef="productImage">
             <th mat-header-cell *matHeaderCellDef>Product Image</th>
@@ -27,16 +26,23 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Actions </th>
             <td mat-cell *matCellDef="let element" style="text-align: right;">
-                <button mat-icon-button (click)="addToCart(element)">
-                    <mat-icon>add_shopping_cart</mat-icon>
-                </button> 
+                <div style="margin-top: 10px;">
+                    <button mat-icon-button (click)="updateQuantity(element, -1)">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <mat-form-field appearance="outline" style="width: 50px; text-align: center">
+                        <input matInput [value]="element.quantity">
+                    </mat-form-field>
+                    <button mat-icon-button (click)="updateQuantity(element, 1)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-    </div>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button color="warn">Delete all items</button>
