@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav, MatDialog, MatSnackBar } from '@angular/material';
 import { ProductsService } from '../../services/products.service';
+import { CartService } from '../../services/cart.service';
 import { CategoriesService } from '../../services/categories.service';
 import { switchMap } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { SigninComponent } from '../../dialogs/signin/signin.component';
-
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-categories',
@@ -27,7 +28,9 @@ export class CategoriesComponent implements OnInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 private matDialog: MatDialog,
-                private matSnackBar: MatSnackBar) { 
+                private matSnackBar: MatSnackBar,
+                private cartService: CartService,
+                private appComponent: AppComponent) { 
     }
 
     public ngOnInit() {
@@ -58,7 +61,17 @@ export class CategoriesComponent implements OnInit {
 
     public addToCart(item: Object) {
         if (localStorage.getItem('jwt') !== null) {
-             
+            const cartItem = {
+                productId: item['id']
+            };
+
+            this.cartService.addToCart(cartItem).subscribe(response => {
+                this.appComponent.getShoppingCartItems();
+                
+                this.matSnackBar.open(response['message'], 'Dismiss', {
+                  duration: 2000,
+                });
+            }); 
         } else {
             this.matSnackBar.open('Please login first, before you add an item to the cart.', 'Dismiss', {
               duration: 2000,
