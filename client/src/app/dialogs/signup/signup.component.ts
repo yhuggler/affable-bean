@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { patternValidator } from '../../shared/pattern-validator';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar, MatDialogRef } from '@angular/material';
 
