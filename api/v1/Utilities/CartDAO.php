@@ -11,7 +11,7 @@
             try {
                 $response = array();
                 
-                $sql = "SELECT cart.id, product_id, quantity, price, description, name, last_update, category_id FROM cart INNER JOIN products ON cart.product_id = products.id WHERE user_id = :user_id";
+                $sql = "SELECT cart_items.id, product_id, quantity, price, description, name, last_update, category_id FROM cart_items INNER JOIN products ON cart_items.product_id = products.id WHERE user_id = :user_id";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
                 $stmt->execute();
@@ -71,7 +71,7 @@
                     return $response;
                 }        
 
-                $sql = "INSERT INTO cart(user_id, product_id) VALUES(:user_id, :product_id)";
+                $sql = "INSERT INTO cart_items(user_id, product_id) VALUES(:user_id, :product_id)";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
                 $stmt->bindParam(':product_id', $productId, PDO::PARAM_INT);
@@ -89,7 +89,7 @@
 
         private function isAlreadyInCart($userId, $productId) {
             try {
-                $sql = "SELECT * FROM cart WHERE product_id = :product_id AND user_id = :user_id";
+                $sql = "SELECT * FROM cart_items WHERE product_id = :product_id AND user_id = :user_id";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':product_id', $productId, PDO::PARAM_INT);
                 $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
@@ -108,7 +108,7 @@
 
         private function getCartItemByProductId($userId, $productId) {
             try {
-                $sql = "SELECT * FROM cart WHERE product_id = :product_id AND user_id = :user_id";
+                $sql = "SELECT * FROM cart_items WHERE product_id = :product_id AND user_id = :user_id";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':product_id', $productId, PDO::PARAM_INT);
                 $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
@@ -139,7 +139,7 @@
                     return $this->deleteItem($itemId);
                 }
 
-                $sql = "UPDATE cart SET quantity = :quantity WHERE id = :item_id";
+                $sql = "UPDATE cart_items SET quantity = :quantity WHERE id = :item_id";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
                 $stmt->bindParam(':item_id', $itemId, PDO::PARAM_INT);
@@ -165,7 +165,7 @@
                     return $response;
                 }
 
-                $sql = "DELETE FROM cart WHERE id = :item_id";
+                $sql = "DELETE FROM cart_items WHERE id = :item_id";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':item_id', $itemId, PDO::PARAM_INT);
                 $stmt->execute();
@@ -190,7 +190,7 @@
                     return $response;
                 }
 
-                $sql = "DELETE FROM cart WHERE user_id = :user_id";
+                $sql = "DELETE FROM cart_items WHERE user_id = :user_id";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
                 $stmt->execute();

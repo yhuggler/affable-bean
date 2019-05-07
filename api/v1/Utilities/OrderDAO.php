@@ -29,7 +29,21 @@
                 $ordersResults = $stmt->fetchAll();
 
                 foreach ($ordersResults as $row) {
-                    $order = new Order($row['id'], $row['amount'], $row['date_created'], $row['confirmation_number'], $row['user_id'], $row['promo_code']);
+                    $sql = "SELECT products.id, name, price, description, last_update, category_id, quantity FROM ordered_products INNER JOIN products ON ordered_products.product_id = products.id WHERE order_id = :order_id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindParam(':order_id', $row['id'], PDO::PARAM_INT);
+                    $stmt->execute();
+
+                    $productResults = $stmt->fetchAll();
+                    $products = array();
+
+                    foreach ($productResults as $productRow) {
+                        $product = new Product($productRow['id'], $productRow['name'], $productRow['price'], $productRow['description'], $productRow['last_update'], $productRow['category_id']);
+                        $shoppingCartItem = new ShoppingCartItem(-1, $row['user_id'], $product, $productRow['quantity']);
+                        array_push($products, $shoppingCartItem);
+                    }
+                    
+                    $order = new Order($row['id'], $row['amount'], $row['date_created'], $row['confirmation_number'], $row['user_id'], $row['promo_code'], $products);
                     array_push($response['data']['orders'], $order);
                 }
 
