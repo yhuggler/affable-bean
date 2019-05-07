@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
+import { CheckoutComponent } from '../checkout/checkout.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -11,7 +13,8 @@ export class ShoppingCartComponent implements OnInit {
     public shoppingCart: Object[];
     public displayedColumns = ['productImage', 'name', 'price', 'actions'];
 
-    constructor(private cartService: CartService) { }
+    constructor(private cartService: CartService,
+                private matDialog: MatDialog) { }
 
     ngOnInit() {
         this.fetchShoppingCartItems();        
@@ -29,6 +32,17 @@ export class ShoppingCartComponent implements OnInit {
         this.cartService.updateQuantity(item['id'], newQuantity).subscribe(response => {
             this.fetchShoppingCartItems();
         });
+    }
+
+    public showCheckoutDialog() {
+        this.matDialog.open(CheckoutComponent, {
+            minWidth: '40%'
+        });
+    }
+
+    public getPriceMultipliedByQuantity(unitPrice: number, quantity: number) {
+        const price = unitPrice * quantity;
+        return Math.round(price * 100) / 100
     }
 
 }

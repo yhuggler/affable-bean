@@ -22,8 +22,9 @@
         public function createOrder() {
             $request = $this->middleware->checkAuth();        
             $userId = $request['user']->id;
-        
-            $response = $this->orderDAO->createOrder($userId);
+            $promoCode = $request['inputs']['promoCode'];
+
+            $response = $this->orderDAO->createOrder($userId, $promoCode);
             ResponseHandler::sendResponseWithMessage("", $response);
         }
     }

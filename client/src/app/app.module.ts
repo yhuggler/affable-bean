@@ -12,6 +12,7 @@ import { HomeComponent } from './routes/home/home.component';
 import { SigninComponent } from './dialogs/signin/signin.component';
 import { SignupComponent } from './dialogs/signup/signup.component';
 import { ShoppingCartComponent } from './dialogs/shopping-cart/shopping-cart.component';
+import { CheckoutComponent } from './dialogs/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ShoppingCartComponent } from './dialogs/shopping-cart/shopping-cart.com
     HomeComponent,
     SigninComponent,
     SignupComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { ShoppingCartComponent } from './dialogs/shopping-cart/shopping-cart.com
   entryComponents: [
     SigninComponent,
     ShoppingCartComponent,
-    SignupComponent
+    SignupComponent,
+    CheckoutComponent
   ],
   providers: [AppComponent],
   bootstrap: [AppComponent]
