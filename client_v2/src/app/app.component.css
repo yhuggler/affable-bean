@@ -1,0 +1,42 @@
+div.container {
+    background: #C2DADA;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+div.space-filler {
+    flex: 1 1 auto;
+}
+
+div.content {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.centered {
+    text-align: center;
+}
+
+p.heading {
+    font-size: 1.5em;
+}
+
+p.subtitle {
+    font-size: 1em;
+}
+img.logo-square {
+    height: 100%;
+    padding: 10px;
+}
+
+img.logo-text {
+    height: 100%;
+    padding: 20px;
+}
+
+.box-shadow {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+

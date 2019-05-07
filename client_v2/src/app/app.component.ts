@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SigninComponent } from './dialogs/signin/signin.component';
 import { SignupComponent } from './dialogs/signup/signup.component';
@@ -10,7 +10,7 @@ import { CartService } from './services/cart.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     public shoppingCartItems: Object[];
 
@@ -19,19 +19,13 @@ export class AppComponent {
                 private cartService: CartService) {
 
         this.getShoppingCartItems();
+        
+    }
 
-        /*
-        const shouldUseNewVersion = this.randomIntFromInterval(0, 1) == 1 ? true : false;
-    
-        if (shouldUseNewVersion) {
-            window.location = 'http://localhost:4201';
-        }*/
+    ngOnInit() {
+
     }
-    
-    randomIntFromInterval(min,max) {
-        return Math.floor(Math.random()*(max-min+1)+min);
-    }
-    
+
     public getShoppingCartItems() {
         if (this.isLoggedIn()) {
             this.cartService.getCart().subscribe(response => {

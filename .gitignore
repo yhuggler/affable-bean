@@ -33,6 +33,8 @@ testem.log
 #System Files
 .DS_Store
 
+node_modules
+
 ### Dropbox ###
 # Dropbox settings and caches
 .dropbox

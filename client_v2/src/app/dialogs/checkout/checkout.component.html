@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Checkout</h1>
+<div mat-dialog-content>
+    <form [formGroup]="promoCodeFormGroup"> 
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Promo Code</mat-label>
+            <input matInput placeholder="Enter a promo code (Optional)" formControlName="promoCode">
+        </mat-form-field>
+    </form>
+    
+    <div class="price-grid">
+        <div class="full-width">
+            <p>Subtotal:</p>
+        </div>
+        <div class="full-width" style="text-align: right">
+            <p>{{subTotal}}</p>
+        </div>
+    </div>
+    <div class="price-grid">
+        <div class="full-width">
+            <p>+ delivery surcharge:</p>
+        </div>
+        <div class="full-width" style="text-align: right">
+            <p>$3</p>
+        </div>
+    </div>
+    <hr>
+    <div class="price-grid">
+        <div class="full-width">
+            <p>= total: </p>
+        </div>
+        <div class="full-width" style="text-align: right">
+            <p>{{ total }}</p>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+  <button mat-raised-button (click)="addOrder()">Place order</button>
+</div>
+
