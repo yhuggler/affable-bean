@@ -11,6 +11,8 @@ import { CategoriesComponent } from './routes/categories/categories.component';
 import { HomeComponent } from './routes/home/home.component';
 import { SigninComponent } from './dialogs/signin/signin.component';
 import { SignupComponent } from './dialogs/signup/signup.component';
+import { ShoppingCartComponent } from './dialogs/shopping-cart/shopping-cart.component';
+import { CheckoutComponent } from './dialogs/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { SignupComponent } from './dialogs/signup/signup.component';
     CategoriesComponent,
     HomeComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    ShoppingCartComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +35,11 @@ import { SignupComponent } from './dialogs/signup/signup.component';
   ],
   entryComponents: [
     SigninComponent,
-    SignupComponent
+    ShoppingCartComponent,
+    SignupComponent,
+    CheckoutComponent
   ],
-  providers: [],
+  providers: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

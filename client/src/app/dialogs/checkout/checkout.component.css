@@ -1,0 +1,9 @@
+div.price-grid {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    width: 100%;
+}
+
+.half-width {
+    width: 50%;
+}

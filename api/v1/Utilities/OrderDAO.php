@@ -42,7 +42,7 @@
             }
         }
 
-        public function createOrder($userId) {
+        public function createOrder($userId, $promoCode) {
             try {
                 $response = array();
                 

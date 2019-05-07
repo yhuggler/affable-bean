@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SigninComponent } from './dialogs/signin/signin.component';
 import { SignupComponent } from './dialogs/signup/signup.component';
-
+import { ShoppingCartComponent } from './dialogs/shopping-cart/shopping-cart.component';
+import { CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,25 @@ import { SignupComponent } from './dialogs/signup/signup.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    
+
+    public shoppingCartItems: Object[];
+
     constructor(private matDialog: MatDialog,
-                private matSnackBar: MatSnackBar) {
+                private matSnackBar: MatSnackBar,
+                private cartService: CartService) {
+
+        this.getShoppingCartItems();
+
     }
-    
+
+    public getShoppingCartItems() {
+        if (this.isLoggedIn()) {
+            this.cartService.getCart().subscribe(response => {
+                this.shoppingCartItems = response['data']['shoppingCart']['shoppingCartItems'];
+            });
+        }
+    }
+
     public showSignInDialog() {
         this.matDialog.open(SigninComponent);
     }
@@ -22,7 +37,13 @@ export class AppComponent {
     public showSignUpDialog() {
         this.matDialog.open(SignupComponent);
     }
-    
+
+    public showShoppingCart() {
+        this.matDialog.open(ShoppingCartComponent, {
+            minWidth: '80%' 
+        });
+    }
+
     public handleLogout() {
         localStorage.removeItem('jwt');
     
