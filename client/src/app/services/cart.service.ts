@@ -48,4 +48,15 @@ export class CartService {
 
         return this.httpClient.get(AppSettings.API_ENDPOINT + 'cart', httpOptions);
     }
+
+    public clearCart() {
+        let httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+            })
+        };
+
+        return this.httpClient.delete(AppSettings.API_ENDPOINT + 'cart', httpOptions);
+    }
 }

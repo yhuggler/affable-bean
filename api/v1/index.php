@@ -65,7 +65,7 @@ $router->mount('/cart', function () use ($router) {
 	$router->get('/', 'CartController@getCart');
 	$router->post('/', 'CartController@addToCart');
 	$router->put('/', 'CartController@updateQuantity');
-	$router->delete('/', 'CartController@deleteItem');
+	$router->delete('/', 'CartController@clearCart');
 });
 
 

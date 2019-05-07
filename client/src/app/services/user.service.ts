@@ -21,7 +21,7 @@ export class UserService {
         return this.httpClient.post(AppSettings.API_ENDPOINT + 'user/signin', body, httpOptions);
     }
 
-    public singup(user: object) {
+    public signup(user: object) {
         let httpOptions = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',

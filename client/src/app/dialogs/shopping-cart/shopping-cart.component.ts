@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CheckoutComponent } from '../checkout/checkout.component';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,7 +15,8 @@ export class ShoppingCartComponent implements OnInit {
 
     constructor(private cartService: CartService,
                 private matDialog: MatDialog,
-                private dialogRef: MatDialogRef<ShoppingCartComponent>) { }
+                private dialogRef: MatDialogRef<ShoppingCartComponent>,
+                private matSnackBar: MatSnackBar) { }
 
     ngOnInit() {
         this.fetchShoppingCartItems();        
@@ -45,6 +46,16 @@ export class ShoppingCartComponent implements OnInit {
                 this.dialogRef.close(true); 
             } 
         });
+    }
+
+    public clearCart() {
+        this.cartService.clearCart().subscribe(response => {
+            this.matSnackBar.open(response['message'], 'Dismiss', {
+              duration: 2000,
+            });
+        });
+
+        this.dialogRef.close(true);
     }
 
     public getPriceMultipliedByQuantity(unitPrice: number, quantity: number) {

@@ -1,3 +1,54 @@
-<p>
-  signup works!
-</p>
+<h1 mat-dialog-title>Signup for AffableBean</h1>
+<div mat-dialog-content>
+    <form [formGroup]="signupForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>E-Mail</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+    
+    <br>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password">
+      </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Repeat Password</mat-label>
+        <input matInput type="password" formControlName="repeatPassword">
+      </mat-form-field>
+    <br>
+    
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone">
+      </mat-form-field>
+    <br>
+    
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Street</mat-label>
+        <input matInput formControlName="street">
+      </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Credit Card Number</mat-label>
+        <input matInput formControlName="creditCardNumber">
+      </mat-form-field>
+    <br>
+
+    <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="signupForm.invalid" (click)="handleSignup()">Sign up</button>
+  </form>
+</div>
