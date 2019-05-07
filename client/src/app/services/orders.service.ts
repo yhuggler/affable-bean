@@ -8,6 +8,17 @@ import { AppSettings } from '../settings/app-settings';
 export class OrdersService {
     
     constructor(private httpClient: HttpClient) { }
+    
+    public getOrders() {
+        let httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+            })
+        };
+
+        return this.httpClient.get(AppSettings.API_ENDPOINT + 'orders', httpOptions);
+    }
 
     public addOrder(order: Object) {
         let body = JSON.stringify(order);

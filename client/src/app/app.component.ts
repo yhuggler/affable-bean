@@ -49,8 +49,14 @@ export class AppComponent {
     }
 
     public showShoppingCart() {
-        this.matDialog.open(ShoppingCartComponent, {
+        const dialogRef = this.matDialog.open(ShoppingCartComponent, {
             minWidth: '80%' 
+        });
+
+        dialogRef.afterClosed().subscribe(hasOrdered => {
+            if (hasOrdered) {
+                this.getShoppingCartItems();
+            }
         });
     }
 

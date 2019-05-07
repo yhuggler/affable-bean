@@ -34,7 +34,7 @@
     </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="false">Cancel</button>
   <button mat-raised-button (click)="addOrder()">Place order</button>
 </div>
 

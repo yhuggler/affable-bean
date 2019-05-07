@@ -13,6 +13,7 @@ import { SigninComponent } from './dialogs/signin/signin.component';
 import { SignupComponent } from './dialogs/signup/signup.component';
 import { ShoppingCartComponent } from './dialogs/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './dialogs/checkout/checkout.component';
+import { OrdersComponent } from './routes/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CheckoutComponent } from './dialogs/checkout/checkout.component';
     SigninComponent,
     SignupComponent,
     ShoppingCartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

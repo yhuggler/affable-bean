@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrdersService } from '../../services/orders.service';
 import { CartService } from '../../services/cart.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-checkout',
@@ -18,7 +19,9 @@ export class CheckoutComponent implements OnInit {
     public promoCodeFormGroup: FormGroup;
 
     constructor(private ordersService: OrdersService,
-                private cartService: CartService) { }
+                private cartService: CartService,
+                private matSnackBar: MatSnackBar,
+                public dialogRef: MatDialogRef<CheckoutComponent>) { }
 
     ngOnInit() {
         this.fetchTotal();
@@ -45,7 +48,11 @@ export class CheckoutComponent implements OnInit {
         };
 
         this.ordersService.addOrder(order).subscribe(response => {
-            console.log(response); 
+            this.matSnackBar.open(response['message'], 'Dismiss', {
+              duration: 2000,
+            });
+
+            this.dialogRef.close(true);
         });
     }
 }
