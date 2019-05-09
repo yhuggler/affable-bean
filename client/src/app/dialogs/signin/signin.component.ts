@@ -19,6 +19,8 @@ export class SigninComponent implements OnInit {
 
     ngOnInit() {
         this.createFormGroup();
+
+        // This fixes bug :D
     }
 
     private createFormGroup() {
